@@ -2,6 +2,7 @@ resource "azurerm_public_ip" "gw_ip" {
   name                = "${var.prefix}-gw-ip"
   location            = var.location
   resource_group_name = var.resource_group_name
+  sku                 = "Standard"
   allocation_method   = "Dynamic"
 }
 
@@ -22,8 +23,8 @@ resource "azurerm_application_gateway" "network" {
   location            = var.location
 
   sku {
-    name     = "Standard_Small"
-    tier     = "Standard"
+    name     = "Standard_v2"
+    tier     = "Standard_v2"
     capacity = 1
   }
 
