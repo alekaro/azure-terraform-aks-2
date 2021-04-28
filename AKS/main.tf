@@ -12,20 +12,6 @@ module "gateway" {
     depends_on              = [azurerm_resource_group.cluster-rg]
 }
 
-resource "azuread_application" "app1" {
-    display_name               = "${var.prefix}-aks-app"
-}
-
-resource "azuread_service_principal" "sp1" {
-    application_id               = azuread_application.app1.application_id
-}
-
-resource "azuread_service_principal_password" "secret1" {
-    service_principal_id = azuread_service_principal.sp1.id
-    value                = "v_fHS7~51925vMiz0.RfZ-2QsJ-WK1FNMF"
-    end_date             = "2022-01-01T01:02:03Z"
-}
-
 module "aks-cluster" {
     source                  = "./modules/aks-cluster"
     prefix                  = var.prefix
@@ -50,30 +36,3 @@ resource "azurerm_user_assigned_identity" "aks_identity" {
 data "azurerm_subscription" "current" {
 }
 
-resource "azurerm_role_assignment" "ra1" {
-    scope                   = module.vnet-main.vnet_subnets[1]
-    role_definition_name    = "Network Contributor"
-    principal_id            = azuread_service_principal.sp1.id
-    depends_on              = [module.vnet-main]
-}
-
-resource "azurerm_role_assignment" "ra2" {
-  scope                = azurerm_user_assigned_identity.aks_identity.id
-  role_definition_name = "Managed Identity Operator"
-  principal_id         = azuread_service_principal.sp1.id
-  depends_on           = [azurerm_user_assigned_identity.aks_identity]
-}
-
-resource "azurerm_role_assignment" "ra3" {
-  scope                = module.gateway.gateway_id
-  role_definition_name = "Contributor"
-  principal_id         = azurerm_user_assigned_identity.aks_identity.principal_id
-  depends_on           = [azurerm_user_assigned_identity.aks_identity, module.gateway]
-}
-
-resource "azurerm_role_assignment" "ra4" {
-  scope                = azurerm_resource_group.cluster-rg.id
-  role_definition_name = "Reader"
-  principal_id         = azurerm_user_assigned_identity.aks_identity.principal_id
-  depends_on           = [azurerm_user_assigned_identity.aks_identity, module.gateway]
-}
