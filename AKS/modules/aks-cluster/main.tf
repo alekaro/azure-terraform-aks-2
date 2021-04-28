@@ -12,12 +12,19 @@ resource "azurerm_kubernetes_cluster" "aks1" {
     vnet_subnet_id  = var.subnet_id
   }
 
+  addon_profile {
+    http_application_routing {
+      enabled = false
+    }
+  }
+
   network_profile {
       network_plugin = "azure"
   }
 
-  identity {
-    type = "SystemAssigned"
+  service_principal {
+    client_id       = var.client_id
+    client_secret   = var.client_secret
   }
 
   role_based_access_control {
