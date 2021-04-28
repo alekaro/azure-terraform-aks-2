@@ -55,7 +55,7 @@ This project was created as a solution for exercise containing given scenario:
 
 ![Image not found](./readme-res/aks-connect.png "Connecting to AKS Cluster")
 
-3. In that same `AzureCLI` insert lines below to enable the AGIC add-on on existing AKS Cluster and Application Gateway(after establishing connection with aks cluster)
+3. In that same `AzureCLI` insert lines below to enable the AGIC add-on on existing AKS Cluster and Application Gateway (after establishing connection with aks cluster)
 
 ```
 appgwId=$(az network application-gateway show -n cluster-gw -g cluster-rg -o tsv --query "id") 
@@ -68,6 +68,14 @@ az aks enable-addons -n cluster-aks -g cluster-rg -a ingress-appgw --appgw-id $a
 kubectl apply -f https://raw.githubusercontent.com/Azure/application-gateway-kubernetes-ingress/master/docs/examples/aspnetapp.yaml
 ```
 
+
+useful links:
+
+* https://docs.microsoft.com/en-us/azure/application-gateway/tutorial-ingress-controller-add-on-existing#enable-the-agic-add-on-in-existing-aks-cluster-through-azure-cli
+* https://docs.microsoft.com/en-us/azure/application-gateway/ingress-controller-autoscale-pods
+* https://registry.terraform.io/modules/claranet/aks/azurerm/latest/submodules/agic
+* https://github.com/Azure/aad-pod-identity
+* https://github.com/cloudcommons/terraform-kubernetes-aad-pod-identity-rbac
 <!-- ```
 helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
 helm install aad-pod-identity aad-pod-identity/aad-pod-identity
