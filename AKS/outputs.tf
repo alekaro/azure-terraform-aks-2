@@ -14,8 +14,8 @@ output "resource_group_name" {
     value   = var.resource_group_name
 }
 
-# output "kube_config" {
-#     value   = module.aks-cluster.kube_config
+# output "kube_config_raw" {
+#     value   = module.aks-cluster.kube_config_raw
 # }
 
 output "identity_resource_id" {
