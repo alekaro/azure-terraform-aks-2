@@ -1,0 +1,6 @@
+[submodule "AKS/terraform-kubernetes-aad-pod-identity-rbac"]
+	path = AKS/terraform-kubernetes-aad-pod-identity-rbac
+	url = https://github.com/alekaro/terraform-kubernetes-aad-pod-identity-rbac.git
+[submodule "AKS/modules/terraform-kubernetes-aad-pod-identity-rbac"]
+	path = AKS/modules/terraform-kubernetes-aad-pod-identity-rbac
+	url = https://github.com/alekaro/terraform-kubernetes-aad-pod-identity-rbac.git
