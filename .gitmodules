@@ -1,3 +1,0 @@
-[submodule "terraform-kubernetes-aad-pod-identity-rbac"]
-	path = terraform-kubernetes-aad-pod-identity-rbac
-	url = https://github.com/jadhavvikas/terraform-kubernetes-aad-pod-identity-rbac.git
