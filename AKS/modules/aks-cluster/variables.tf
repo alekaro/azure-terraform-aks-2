@@ -18,6 +18,10 @@ variable "client_secret" {
     description = "Secret of the service principal. Used by AKS to manage Azure."
 }
 
+variable "gateway_id" {
+    type    = string
+}
+
 variable "node_count" {
     type    = number
     default = 1

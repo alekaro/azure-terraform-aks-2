@@ -16,6 +16,10 @@ resource "azurerm_kubernetes_cluster" "aks1" {
     http_application_routing {
       enabled = false
     }
+    # ingress_application_gateway {   # Not yet implemented (probably in terraform version 0.16)
+    #   enabled     = true
+    #   gateway_id  = var.gateway_id
+    # }
   }
 
   network_profile {
