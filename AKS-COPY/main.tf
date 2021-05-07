@@ -19,20 +19,18 @@ module "aks-cluster" {
     node_count              = 1
     subnet_id               = module.vnet-main.vnet_subnets[1] # cluster
     enable_rbac             = true
-    user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
+    user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity_1.id
 
-    depends_on              = [azurerm_resource_group.cluster-rg, azurerm_user_assigned_identity.aks_identity] # azuread_service_principal_password.secret1]
+    depends_on              = [azurerm_resource_group.cluster-rg, azurerm_user_assigned_identity.aks_identity_1]
 }
 
-# module "aad-pod-identity" {
-#     source                  = "./modules/terraform-kubernetes-aad-pod-identity-rbac"
-# }
-
-resource "azurerm_user_assigned_identity" "aks_identity" {
-  resource_group_name = azurerm_resource_group.cluster-rg.name
-  location            = azurerm_resource_group.cluster-rg.location
+resource "azurerm_user_assigned_identity" "aks_identity_1" {
+  resource_group_name = var.resource_group_name
+  location            = var.location
 
   name = "${var.prefix}-aks-identity"
+
+  depends_on          = [azurerm_resource_group.cluster-rg]
 }
 
 data "azurerm_subscription" "current" {

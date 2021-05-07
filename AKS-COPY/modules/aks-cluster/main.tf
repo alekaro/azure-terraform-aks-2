@@ -32,10 +32,9 @@ resource "azurerm_kubernetes_cluster" "aks1" {
   # }
 
   identity {
-    type                        = "UserAssigned"
-    user_assigned_identity_id   = var.user_assigned_identity_id
+    type                      = "UserAssigned"
+    user_assigned_identity_id = var.user_assigned_identity_id
   }
-
 
   role_based_access_control {
     enabled = var.enable_rbac

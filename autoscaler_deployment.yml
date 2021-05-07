@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-example
+  labels:
+    app: example-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-app
+  template:
+    metadata:
+      labels:
+        app: example-app
+        aadpodbinding: aad_pod_selector
+    spec:
+      containers:
+      - name: example-container
+        image: storage45790acr.azurecr.io/azure-storage-example:1
+        # env:
+        #   - name: AZURE_CLIENT_ID
+        #     value: 9a0c879f-5c54-4cb3-b6f4-c335ab51322a
+        #   - name: BLOB_ACCOUNT_NAME
+        #     value: $STORAGE_ACCOUNT_NAME
+        #   - name: BLOB_CONTAINER_NAME
+        #     value: $CONTAINER
+        # nodeSelector:
+        #   kubernetes.io/os: linux
+        ports: 
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ser-example
+spec:
+  selector:
+    app: example-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingr-example
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ser-example
+          servicePort: 80

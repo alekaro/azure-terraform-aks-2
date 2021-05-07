@@ -59,11 +59,41 @@ This project was created as a solution for exercise containing given scenario:
 
 ```
 appgwId=$(az network application-gateway show -n cluster-gw -g cluster-rg -o tsv --query "id") 
-
 az aks enable-addons -n cluster-aks -g cluster-rg -a ingress-appgw --appgw-id $appgwId
 ```
 
-4. Deploy sample application in the AKS Cluster
+4. install AAD Pod Identity on a cluster through Helm
+```
+helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
+helm install aad-pod-identity aad-pod-identity/aad-pod-identity
+```
+
+5. Configure AzureIdentity<sup>[1]</sup> and AzureIdentityBinding<sup>[2]</sup> through commandline or use automaticly made files via `config.tf` file
+  * copy content form `azureidentity_deploy.yml` file into your AzureCLI, the same goes with `azureidentitybinding_deploy.yml`
+  * in AzureCLI execute:
+  ```
+  kubectl apply -f azureidentity_deploy.yml
+  kubectl apply -f azureidentitybinding_deploy.yml
+  ```
+
+6. Create docker image and push it to Azure Container Registry
+
+  * in your terminal (not AzureCLI because *This command requires running the docker daemon, which is not supported in Azure Cloud Shell...*) execute:
+  ```
+  ACR=<YOUR_ACR>
+  IMG=$ACR.azurecr.io/azure-storage-example:1
+
+  az acr login --name $ACR
+
+  docker build -t $IMG .
+  docker push $IMG
+  ```
+  or just execute generated script
+  ```
+  /bin/bash image_deploy.sh
+  ```
+
+7. Deploy sample application in the AKS Cluster
 ```
 kubectl apply -f https://raw.githubusercontent.com/Azure/application-gateway-kubernetes-ingress/master/docs/examples/aspnetapp.yaml
 ```
@@ -76,6 +106,22 @@ useful links:
 * https://registry.terraform.io/modules/claranet/aks/azurerm/latest/submodules/agic
 * https://github.com/Azure/aad-pod-identity
 * https://github.com/cloudcommons/terraform-kubernetes-aad-pod-identity-rbac
+* https://github.com/Azure/terraform-azurerm-appgw-ingress-k8s-cluster
+* https://azure.github.io/aad-pod-identity/docs/demo/java-blob/ (Don't use it too much)
+
+
+<h2 style="color: yellow">TODO:</h2>
+
+1. Try to install AGIC ingress controller other way than through add-on in AzureCLI - https://github.com/claranet/terraform-azurerm-aks/tree/v4.1.0/modules/tools/agic
+2. aad-pod-identity is for pods to reach out for ASA container content - https://github.com/Azure/aad-pod-identity
+3. Add `kubernetes_horizontal_pod_autoscaler` and scale AKS cluster using Application Gateway Metrics - https://docs.microsoft.com/en-us/azure/application-gateway/ingress-controller-autoscale-pods
+4. test that once again - https://docs.microsoft.com/en-us/azure/developer/terraform/create-k8s-cluster-with-aks-applicationgateway-ingress
+5. Go along this tutorial but on your own https://azure.github.io/aad-pod-identity/docs/demo/java-blob/ (install aad-pod-id through helm e.g. https://github.com/Azure/aad-pod-identity)
+6. Manage kubernetes through commandline (normally you would do it through gitlab pipeline but for now CLI) = delete kubernetes.tf
+7. hardware - terraform (cloud), middleware - gitlab pipeline
+8. Set user assigned managed identity for AKS cluster and make it somehow to be in special resource group dedicated for AKS
+
+
 <!-- ```
 helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
 helm install aad-pod-identity aad-pod-identity/aad-pod-identity
