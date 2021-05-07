@@ -34,6 +34,10 @@ output "user_assigned_identity_client_id" {
   value = azurerm_user_assigned_identity.aks_identity_1.client_id
 }
 
-output "cluster_msi_client_id" {
-  value = module.aks-cluster.cluster_msi_client_id
+output "full_kubelet_identity" {
+  value = module.aks-cluster.full_kubelet_identity
+}
+
+output "full_identity" {
+  value = module.aks-cluster.full_identity
 }

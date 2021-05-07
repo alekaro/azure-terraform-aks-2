@@ -34,8 +34,22 @@ resource "azurerm_role_assignment" "ra5" {
 }
 
 resource "azurerm_role_assignment" "ra6" {
+  scope                = var.storage_account_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = module.aks-cluster.kubelet_identity_object_id
+  depends_on           = [module.aks-cluster, azurerm_user_assigned_identity.aks_identity_1]
+}
+
+resource "azurerm_role_assignment" "ra7" {
   scope                = var.container_registry_id
   role_definition_name = "Contributor"
   principal_id         = azurerm_user_assigned_identity.aks_identity_1.principal_id
+  depends_on           = [module.aks-cluster, azurerm_user_assigned_identity.aks_identity_1]
+}
+
+resource "azurerm_role_assignment" "ra8" {
+  scope                = var.container_registry_id
+  role_definition_name = "Contributor"
+  principal_id         = module.aks-cluster.kubelet_identity_object_id
   depends_on           = [module.aks-cluster, azurerm_user_assigned_identity.aks_identity_1]
 }

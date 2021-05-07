@@ -18,6 +18,10 @@ output "container_registry_name" {
     value = module.asa.container_registry_name
 }
 
-output "cluster_msi_client_id" {
-  value = module.aks.cluster_msi_client_id
+output "full_kubelet_identity" {
+  value = module.aks.full_kubelet_identity
+}
+
+output "full_identity" {
+  value = module.aks.full_identity
 }
