@@ -18,6 +18,14 @@ output "kubelet_identity_object_id" {
   value = azurerm_kubernetes_cluster.aks1.kubelet_identity[0].object_id
 }
 
+output "kubelet_identity_client_id" {
+  value = azurerm_kubernetes_cluster.aks1.kubelet_identity[0].client_id
+}
+
+output "kubelet_identity_user_assigned_identity_id" {
+  value = azurerm_kubernetes_cluster.aks1.kubelet_identity[0].user_assigned_identity_id
+}
+
 output "identity_principal_id" {
   value = azurerm_kubernetes_cluster.aks1.identity[0].principal_id
 }
