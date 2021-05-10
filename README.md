@@ -93,9 +93,15 @@ helm install aad-pod-identity aad-pod-identity/aad-pod-identity
   /bin/bash image_deploy.sh
   ```
 
-7. Deploy sample application in the AKS Cluster
+7. Don't forget to upload `index.html` file to ASA, it can using below scrip aswell:
 ```
-kubectl apply -f https://raw.githubusercontent.com/Azure/application-gateway-kubernetes-ingress/master/docs/examples/aspnetapp.yaml
+/bin/bash push_to_storage.sh
+```
+
+
+8. Copy deployment YAML file and deploy sample application in the AKS Cluster
+```
+kubectl apply -f autoscaler_deployment.yml
 ```
 
 
@@ -108,39 +114,3 @@ useful links:
 * https://github.com/cloudcommons/terraform-kubernetes-aad-pod-identity-rbac
 * https://github.com/Azure/terraform-azurerm-appgw-ingress-k8s-cluster
 * https://azure.github.io/aad-pod-identity/docs/demo/java-blob/ (Don't use it too much)
-
-
-<h2 style="color: yellow">TODO:</h2>
-
-1. Try to install AGIC ingress controller other way than through add-on in AzureCLI - https://github.com/claranet/terraform-azurerm-aks/tree/v4.1.0/modules/tools/agic
-2. aad-pod-identity is for pods to reach out for ASA container content - https://github.com/Azure/aad-pod-identity
-3. Add `kubernetes_horizontal_pod_autoscaler` and scale AKS cluster using Application Gateway Metrics - https://docs.microsoft.com/en-us/azure/application-gateway/ingress-controller-autoscale-pods
-4. test that once again - https://docs.microsoft.com/en-us/azure/developer/terraform/create-k8s-cluster-with-aks-applicationgateway-ingress
-5. Go along this tutorial but on your own https://azure.github.io/aad-pod-identity/docs/demo/java-blob/ (install aad-pod-id through helm e.g. https://github.com/Azure/aad-pod-identity)
-6. Manage kubernetes through commandline (normally you would do it through gitlab pipeline but for now CLI) = delete kubernetes.tf
-7. hardware - terraform (cloud), middleware - gitlab pipeline
-8. Set user assigned managed identity for AKS cluster and make it somehow to be in special resource group dedicated for AKS
-
-
-<!-- ```
-helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
-helm install aad-pod-identity aad-pod-identity/aad-pod-identity
-```
-
-```
-helm repo add application-gateway-kubernetes-ingress https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/
-helm repo update
-```
-
-```
-wget https://raw.githubusercontent.com/Azure/application-gateway-kubernetes-ingress/master/docs/examples/sample-helm-config.yaml -O helm-config.yaml
-
-nano helm-config.yaml
-```
-
-```
-helm install ingress-azure \
-  -f helm-config.yaml \
-  application-gateway-kubernetes-ingress/ingress-azure \
-  --version 1.3.0
-``` -->
