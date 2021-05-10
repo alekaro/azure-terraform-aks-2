@@ -13,20 +13,12 @@ spec:
     metadata:
       labels:
         app: example-app
-        aadpodbinding: aad_pod_selector
+        aadpodidbinding: aad_pod_selector
     spec:
       containers:
       - name: example-container
-        image: storage45790acr.azurecr.io/azure-storage-example:1
-        # env:
-        #   - name: AZURE_CLIENT_ID
-        #     value: 9a0c879f-5c54-4cb3-b6f4-c335ab51322a
-        #   - name: BLOB_ACCOUNT_NAME
-        #     value: $STORAGE_ACCOUNT_NAME
-        #   - name: BLOB_CONTAINER_NAME
-        #     value: $CONTAINER
-        # nodeSelector:
-        #   kubernetes.io/os: linux
+        image: storage93594acr.azurecr.io/azure-storage-example:1
+        env:
         ports: 
         - containerPort: 80
 

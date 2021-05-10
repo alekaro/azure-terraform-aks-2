@@ -3,5 +3,5 @@ kind: AzureIdentityBinding
 metadata:
   name: azure-identity-binding-test
 spec:
-  azureIdentity: "azure-identity-test"
-  selector: "aad_pod_selector"
+  azureIdentity: azure-identity-test
+  selector: aad_pod_selector
