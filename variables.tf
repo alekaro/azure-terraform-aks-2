@@ -27,3 +27,18 @@ variable "image_deploy_script_name" {
     type    = string
     default = "image_deploy"
 }
+
+variable "init_script_name" {
+    type    = string
+    default = "init_script"
+}
+
+variable "storage_content_push_script_name" {
+    type    = string
+    default = "push_to_storage"
+}
+
+variable "deployment_file_name" {
+    type    = string
+    default = "autoscaler_deployment"
+}
