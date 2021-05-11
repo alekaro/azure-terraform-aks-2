@@ -32,21 +32,6 @@ This project was created as a solution for exercise containing given scenario:
 ---
 ## Launch instruction
 ---
-0. Preparation (if service principal is being created through azure portal):
-* Home -> Azure Active Directory -> App registrations -> New registration -> insert name and create
-* Certificates & secrets -> New client secret -> Add
-* **Application (client) ID** = aks-cluster: client_id
-  
-  Newly created secret value = aks-cluster: client_secret
-
-  Needed to role assignments service principal object ID =
-
-  ```az ad sp show --id <app_id>```
-  
-  executed in `AzureCLI`
-
-  (**Object ID** under **Application (client) ID** in **App registrations** bookmark is wrong value)
----
 1. in root module
 ```
     terraform apply
@@ -68,7 +53,7 @@ helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-i
 helm install aad-pod-identity aad-pod-identity/aad-pod-identity
 ```
 
-5. Configure AzureIdentity<sup>[1]</sup> and AzureIdentityBinding<sup>[2]</sup> through commandline or use automaticly made files via `config.tf` file
+5. Configure AzureIdentity[<sup>[1]</sup>](https://azure.github.io/aad-pod-identity/docs/concepts/azureidentity/) and AzureIdentityBinding[<sup>[2]</sup>](https://azure.github.io/aad-pod-identity/docs/concepts/azureidentitybinding/) through commandline or use automaticly made files via `config.tf` file
   * copy content form `azureidentity_deploy.yml` file into your AzureCLI, the same goes with `azureidentitybinding_deploy.yml`
   * in AzureCLI execute:
   ```
@@ -93,7 +78,7 @@ helm install aad-pod-identity aad-pod-identity/aad-pod-identity
   /bin/bash image_deploy.sh
   ```
 
-7. Don't forget to upload `index.html` file to ASA, it can using below scrip aswell:
+7. Don't forget to upload `index.html` file to ASA, it can be done using below scrip aswell:
 ```
 /bin/bash push_to_storage.sh
 ```
@@ -114,3 +99,5 @@ useful links:
 * https://github.com/cloudcommons/terraform-kubernetes-aad-pod-identity-rbac
 * https://github.com/Azure/terraform-azurerm-appgw-ingress-k8s-cluster
 * https://azure.github.io/aad-pod-identity/docs/demo/java-blob/ (Don't use it too much)
+* What is Managed Identity Controller (MIC) - https://azure.github.io/aad-pod-identity/docs/concepts/mic/
+* What is Node Managed Identity (NMI) - https://azure.github.io/aad-pod-identity/docs/concepts/nmi/
