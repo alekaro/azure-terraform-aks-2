@@ -101,3 +101,7 @@ useful links:
 * https://azure.github.io/aad-pod-identity/docs/demo/java-blob/ (Don't use it too much)
 * What is Managed Identity Controller (MIC) - https://azure.github.io/aad-pod-identity/docs/concepts/mic/
 * What is Node Managed Identity (NMI) - https://azure.github.io/aad-pod-identity/docs/concepts/nmi/
+
+TODO:
+- put ASA and ACR in the same vnet as AKS Cluster
+- Use different managed identity for Pods

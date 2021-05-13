@@ -14,14 +14,6 @@ output "resource_group_name" {
     value   = var.resource_group_name
 }
 
-output "user_assigned_identity_id" {
-  value = azurerm_user_assigned_identity.aks_identity_1.id
-}
-
-output "user_assigned_identity_client_id" {
-  value = azurerm_user_assigned_identity.aks_identity_1.client_id
-}
-
 output "kubelet_identity_object_id" {
   value = module.aks-cluster.kubelet_identity_object_id
 }

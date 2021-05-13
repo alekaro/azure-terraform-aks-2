@@ -17,9 +17,8 @@ module "aks-cluster" {
     node_count              = 1
     subnet_id               = module.vnet-main.vnet_subnets[1] # cluster
     enable_rbac             = true
-    user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity_1.id
 
-    depends_on              = [azurerm_resource_group.cluster-rg, azurerm_user_assigned_identity.aks_identity_1]
+    depends_on              = [azurerm_resource_group.cluster-rg]
 }
 
 data "azurerm_subscription" "current" {

@@ -32,7 +32,7 @@ echo 'azcopy copy "https://${module.asa.storage_account_name}.blob.core.windows.
 echo '# TOKEN=$(curl -s 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fstorage.azure.com%2F' -H Metadata:true | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])")'        >> ${var.init_script_name}.sh
 echo '# curl "https://${module.asa.storage_account_name}.blob.core.windows.net/${module.asa.storage_container_name}/index.html" -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $${TOKEN}" > /var/www/html/index.html'        >> ${var.init_script_name}.sh
 
-echo 'azcopy "./index.html" "https://${module.asa.storage_account_name}.blob.core.windows.net/${module.asa.storage_container_name}/"'        > ${var.storage_content_push_script_name}.sh
+echo 'azcopy copy "./index.html" "https://${module.asa.storage_account_name}.blob.core.windows.net/${module.asa.storage_container_name}/"'        > ${var.storage_content_push_script_name}.sh
 
 echo 'apiVersion: apps/v1'                  > ${var.deployment_file_name}.yml
 echo 'kind: Deployment'                     >> ${var.deployment_file_name}.yml

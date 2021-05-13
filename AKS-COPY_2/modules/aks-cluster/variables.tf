@@ -26,7 +26,3 @@ variable "subnet_id" {
 variable "enable_rbac" {
     type    = bool
 }
-
-variable "user_assigned_identity_id" {
-    type    = string
-}
