@@ -1,0 +1,8 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: azure-identity-test
+spec:
+  type: 0
+  resourceID: "/subscriptions/882c09dc-5677-4228-82e4-8bb80de844cd/resourceGroups/MC_cluster-rg_cluster-aks_westeurope/providers/Microsoft.ManagedIdentity/userAssignedIdentities/cluster-aks-agentpool"
+  clientID: "3f0a45f7-e13b-4a45-bffb-79f55c2d27bf"
